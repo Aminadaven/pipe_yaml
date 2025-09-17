@@ -1,0 +1,34 @@
+pipeline: sales_etl
+#engine: duckdb
+extract:
+  - step: load_sales_data
+    df: sales_data
+    path: "data/sales.csv"
+    format: csv
+    options:
+      header: true
+  - step: load_winemag_data
+    df: winemag_data
+    path: "data/winemag-reviews.json"
+    format: json
+transform:
+  - step: count_winemag
+    sql: SELECT count(*) FROM winemag_data
+  - step: head_winemag
+    sql: SELECT * FROM winemag_data limit 10
+  #  - step: debug_sales
+  #    sql: SELECT * FROM sales_data limit 10
+  - step: clean_sales
+    sql: SELECT SUPPLIER, "ITEM TYPE", sum("WAREHOUSE SALES") AS SALES FROM sales_data GROUP BY SUPPLIER, "ITEM TYPE"
+    df: clean_sales
+#  - step: debug_sales
+#    sql: SELECT * FROM clean_sales order by SALES desc limit 10
+load:
+  - step: sales_output
+    df: clean_sales
+    mode: overwrite
+    format: csv
+    path: "output/sales.csv"
+#    path: "output/sales.zstd.parquet"
+#    options:
+#      compression: zstd
