@@ -40,11 +40,6 @@ def main(args: Args):
     if engine == 'spark':
         with spark_context_manager(app_name=pipeline, cores='*', log_level='ERROR') as sc:
             etl_runner = SparkETL(sc)
-            # spark_etl.extract_data(extract_steps)
-            # if transform_steps:
-            #     spark_etl.transform_data(transform_steps)
-            # if load_steps:
-            #     spark_etl.load_data(load_steps)
     elif engine == 'duckdb':
         etl_runner = DuckdbETL()
     else:
