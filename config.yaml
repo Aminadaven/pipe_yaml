@@ -1,10 +1,11 @@
 pipeline: sales_etl
-#engine: duckdb
+engine: duckdb
 extract:
   - step: load_sales_data
     df: sales_data
     path: "data/sales.csv"
     format: csv
+    cache: true
     options:
       header: true
   - step: load_winemag_data
@@ -28,7 +29,7 @@ load:
     df: clean_sales
     mode: overwrite
     format: csv
-    path: "output/sales.csv"
-#    path: "output/sales.zstd.parquet"
-#    options:
-#      compression: zstd
+    #    path: "output/sales.csv"
+    path: "output/sales.zstd.parquet"
+    options:
+      compression: zstd

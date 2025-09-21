@@ -1,30 +1,6 @@
 from abc import ABC, abstractmethod
 
-
-class ExtractStep:
-    def __init__(self, step, path, df, format, options=None):
-        self.name = step
-        self.path = path
-        self.df = df
-        self.format = format
-        self.options = options or {}
-
-
-class TransformStep:
-    def __init__(self, step, sql, df=None):
-        self.name = step
-        self.sql = sql
-        self.df = df
-
-
-class LoadStep:
-    def __init__(self, step, df, mode, format, path, options=None):
-        self.name = step
-        self.mode = mode
-        self.path = path
-        self.df = df
-        self.format = format
-        self.options = options or {}
+from steps import *
 
 
 class ETL(ABC):
@@ -56,3 +32,12 @@ class ETL(ABC):
         print("Loading data into targets...")
         for step in steps:
             self._load_step(step)
+
+    def run(self, pipeline: Pipeline):
+        print(f'Starting ETL: {pipeline.name}')
+        self.extract_data(pipeline.extract_steps)
+        if pipeline.transform_steps:
+            self.transform_data(pipeline.transform_steps)
+        if pipeline.load_steps:
+            self.load_data(pipeline.load_steps)
+        print(f'Finished ETL: {pipeline.name}')

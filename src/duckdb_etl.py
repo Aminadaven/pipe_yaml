@@ -1,6 +1,6 @@
 import duckdb
 
-from abc_etl import *
+from etl import *
 
 
 class DuckdbETL(ETL):
