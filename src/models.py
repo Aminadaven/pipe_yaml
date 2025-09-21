@@ -14,9 +14,17 @@ class ExtractStep(BaseModel):
 
 class TransformStep(BaseModel):
     name: str = Field(alias="step")
-    sql: str
+    sql: str = None
+    sql_file: str = None
+    inputs: dict = Field(default_factory=dict)
     df: str = None
     cache: bool = False
+
+    @model_validator(mode='after')
+    def validate_transformation(self) -> Self:
+        if bool(self.sql) ^ bool(self.sql_file):
+            return self
+        raise ValueError('Invalid Transformation: must provide sql or sql_file!')
 
 
 class LoadStep(BaseModel):

@@ -1,0 +1,28 @@
+pipeline: wine_reviews_etl
+engine: spark
+extract:
+  - step: load_winemag_data
+    df: winemag_data
+    path: "data/winemag-reviews.json"
+    format: json
+    cache: true
+transform:
+  - step: count_winemag
+    sql: SELECT count(*) FROM winemag_data
+  - step: head_winemag
+    sql: SELECT * FROM winemag_data limit 10
+  - step: most_reviewed
+    sql_file: sql/most_reviewed.sql
+    inputs:
+      winemag_df: winemag_data
+    df: most_reviewed
+  - step: debug_most_reviewed
+    sql: SELECT * FROM most_reviewed
+load:
+  - step: winemag_output
+    df: winemag_data
+    mode: overwrite
+    format: parquet
+    path: "output/winemag.zstd.parquet"
+    options:
+      compression: zstd

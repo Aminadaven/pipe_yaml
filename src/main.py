@@ -3,7 +3,7 @@ import argparse
 import yaml
 
 from etl_factory import EtlFactory
-from steps import *
+from models import *
 
 
 class Args:

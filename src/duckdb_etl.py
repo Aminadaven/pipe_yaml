@@ -1,9 +1,12 @@
 import duckdb
 
-from etl import *
+from base_etl import *
 
 
-class DuckdbETL(ETL):
+class DuckdbETL(BaseETL):
+    def __init__(self):
+        super().__init__()
+
     def _extract_step(self, step: ExtractStep):
         super()._extract_step(step)
         duckdb.sql(f"CREATE TABLE {step.df} AS SELECT * FROM '{step.path}';")

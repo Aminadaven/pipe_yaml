@@ -1,11 +1,11 @@
+from base_etl import BaseETL
 from duckdb_etl import DuckdbETL
-from etl import ETL
 from spark_etl import SparkETL
 
 
 class EtlFactory:
     @staticmethod
-    def create_etl(engine: str) -> ETL:
+    def create_etl(engine: str) -> BaseETL:
         if engine == 'spark':
             return SparkETL()
         elif engine == 'duckdb':

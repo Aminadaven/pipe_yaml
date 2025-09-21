@@ -2,7 +2,7 @@ from contextlib import contextmanager
 
 from pyspark.sql import SparkSession, DataFrame
 
-from etl import *
+from base_etl import *
 
 
 @contextmanager
@@ -24,8 +24,9 @@ def spark_context_manager(app_name=None, cores='*', log_level='WARN', **kwargs):
         spark.stop()
 
 
-class SparkETL(ETL):
+class SparkETL(BaseETL):
     def __init__(self):
+        super().__init__()
         self._spark = None
 
     @staticmethod
