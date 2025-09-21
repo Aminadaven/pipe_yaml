@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="8f206411-02c6-4624-a88e-8c25f4bdb609" name="Changes" comment="refactor to cleaner and better code">
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/pipe_yaml.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sql/most_reviewed.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/wine_reviews.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pyproject.toml" beforeDir="false" afterPath="$PROJECT_DIR$/pyproject.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/duckdb_etl.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/duckdb_etl.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/etl.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/base_etl.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/etl_factory.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/etl_factory.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/spark_etl.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/spark_etl.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/steps.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uv.lock" beforeDir="false" afterPath="$PROJECT_DIR$/uv.lock" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "Aminadaven"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/Aminadaven/pipe_yaml.git",
+    "accountId": "c2e22821-0ef8-4425-b92d-f7403ba5797f"
+  }
+}]]></component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 7
+}]]></component>
+  <component name="ProjectId" id="32n4FMcd5Pjc7HuA75OmnskRQEi" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "Python.main.executor": "Debug",
+    "Python.s.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "D:/aminadav/projects/pipe_yaml"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\aminadav\projects\pipe_yaml" />
+      <recent name="D:\aminadav\projects\pipe_yaml\src" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\aminadav\projects\pipe_yaml\src" />
+    </key>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-python-sdk-e0ed3721d81e-36ea0e71a18c-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-251.25410.159" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="8f206411-02c6-4624-a88e-8c25f4bdb609" name="Changes" comment="" />
+      <created>1758042897496</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1758042897496</updated>
+    </task>
+    <task id="LOCAL‎-00001" summary="Initial commit">
+      <option name="closed" value="true" />
+      <created>1758084748853</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL‎-00001" />
+      <option name="project" value="LOCAL‎" />
+      <updated>1758084748853</updated>
+    </task>
+    <task id="LOCAL‎-00002" summary="Added readme.md">
+      <option name="closed" value="true" />
+      <created>1758085357441</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL‎-00002" />
+      <option name="project" value="LOCAL‎" />
+      <updated>1758085357441</updated>
+    </task>
+    <task id="LOCAL‎-00003" summary="remove obsolete code">
+      <option name="closed" value="true" />
+      <created>1758162564713</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL‎-00003" />
+      <option name="project" value="LOCAL‎" />
+      <updated>1758162564713</updated>
+    </task>
+    <task id="LOCAL‎-00004" summary="refactor to cleaner and better code">
+      <option name="closed" value="true" />
+      <created>1758418487701</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL‎-00004" />
+      <option name="project" value="LOCAL‎" />
+      <updated>1758418487701</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
+    <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Initial commit" />
+    <MESSAGE value="Added readme.md" />
+    <MESSAGE value="remove obsolete code" />
+    <MESSAGE value="refactor to cleaner and better code" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactor to cleaner and better code" />
+    <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
+    <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
+  </component>
+</project>
