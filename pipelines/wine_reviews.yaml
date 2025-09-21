@@ -1,5 +1,5 @@
 pipeline: wine_reviews_etl
-engine: spark
+engine: duckdb
 extract:
   - step: load_winemag_data
     df: winemag_data

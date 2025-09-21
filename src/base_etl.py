@@ -11,7 +11,7 @@ class BaseETL(ABC):
 
     @abstractmethod
     def _extract_step(self, step: ExtractStep):
-        print(f"Step {step.name}: Loading data from {step.path} into {step.df}")
+        print(f"Step {step.name}: \n\tLoading data from {step.path} into {step.df}")
 
     def extract_data(self, steps: list[ExtractStep]):
         print("Extracting data from sources...")
@@ -25,7 +25,7 @@ class BaseETL(ABC):
                 sql_template = f.read()
             template = self._jinja_env.from_string(sql_template)
             step.sql = template.render(**step.inputs)
-        print(f"Step {step.name}: Transforming data using SQL: {step.sql}")
+        print(f"Step {step.name}: \n\tTransforming data using SQL: \n{step.sql}")
 
     def transform_data(self, steps: list[TransformStep]):
         print("Transforming data...")
