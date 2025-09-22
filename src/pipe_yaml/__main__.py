@@ -2,8 +2,8 @@ import argparse
 
 import yaml
 
-from etl_factory import EtlFactory
-from models import *
+from pipe_yaml.etl_factory import EtlFactory
+from pipe_yaml.models import *
 
 
 class Args:
@@ -24,11 +24,12 @@ def load_pipeline(args):
     return Pipeline(**config)
 
 
-def main(args: Args):
+def main():
+    args = Args.from_args()
     pipeline = load_pipeline(args)
     etl_runner = EtlFactory.create_etl(pipeline.engine)
     etl_runner.run(pipeline)
 
 
 if __name__ == "__main__":
-    main(Args.from_args())
+    main()

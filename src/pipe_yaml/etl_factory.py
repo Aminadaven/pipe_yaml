@@ -1,6 +1,6 @@
-from base_etl import BaseETL
-from duckdb_etl import DuckdbETL
-from spark_etl import SparkETL
+from pipe_yaml.base_etl import BaseETL
+from pipe_yaml.duckdb_etl import DuckdbETL
+from pipe_yaml.spark_etl import SparkETL
 
 
 class EtlFactory:

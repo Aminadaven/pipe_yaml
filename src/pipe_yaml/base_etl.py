@@ -4,7 +4,7 @@ from abc import ABC, abstractmethod
 import jinja2
 from loguru import logger
 
-from models import *
+from pipe_yaml.models import *
 
 logger.add(sys.stdout, serialize=True)
 

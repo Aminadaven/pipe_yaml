@@ -14,63 +14,92 @@ DuckDB) with YAML-based configuration.
 ## Requirements
 
 - Python 3.13+
-- Java 17+ (for Spark)
+- Java 17+ (for Spark engine)
+- [uv](https://github.com/astral-sh/uv) package manager
 
 ## Installation
 
-1. Clone the repository:
+1. **Install uv** (if not already installed):
+   ```bash
+   # On Windows
+   powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+
+   # On macOS/Linux
+   curl -LsSf https://astral.sh/uv/install.sh | sh
+   ```
+
+2. **Clone the repository**:
    ```bash
    git clone https://github.com/aminadaven/pipe_yaml.git
    cd pipe_yaml
    ```
 
-2. Create and activate a virtual environment using uv:
+3. **Set up the project**:
    ```bash
-   python -m venv .venv
-   .venv\Scripts\activate  # On Windows
-   # or
-   source .venv/bin/activate  # On Unix/macOS
-   ```
+   # Install the package in development mode with all dependencies
+   uv sync --dev
 
-3. Install dependencies:
-   ```bash
-   pip install -e .
+   # Activate the virtual environment
+   # On Windows
+   .venv\Scripts\activate
+
+   # On macOS/Linux
+   source .venv/bin/activate
    ```
 
 ## Usage
 
-1. Create a YAML configuration file (e.g., `config.yaml`):
+### Running the ETL Tool
 
-   ```yaml
-   pipeline: sales_etl
-   engine: duckdb  # or 'spark'
-   
-   extract:
-     - step: load_sales_data
-       df: sales_data
-       path: "data/sales.csv"
-       format: csv
-       options:
-         header: true
-   
-   transform:
-     - step: clean_sales
-       sql: SELECT SUPPLIER, "ITEM TYPE", sum("WAREHOUSE SALES") AS SALES 
-            FROM sales_data 
-            GROUP BY SUPPLIER, "ITEM TYPE"
-       df: clean_sales
-   
-   load:
-     - step: sales_output
-       df: clean_sales
-       mode: overwrite
-       format: csv
-       path: "output/sales.csv"
+The project provides multiple ways to run ETL pipelines:
+
+1. **Using the etl command** (recommended):
+   ```bash
+   etl pipelines/sales_etl.yaml
    ```
 
-2. Run the ETL pipeline:
+2. **Using Python module**:
    ```bash
-   python main.py pipeline/sales_etl.yaml
+   python -m pipe_yaml pipelines/sales_etl.yaml
+   ```
+
+3. **Using the installed script**:
+   ```bash
+   python -m pipe_yaml.__main__ pipelines/sales_etl.yaml
+   ```
+
+### Creating Your First Pipeline
+
+1. Create a YAML configuration file (e.g., `my_pipeline.yaml`):
+
+```yaml
+pipeline: my_etl
+engine: duckdb  # or 'spark'
+
+extract:
+  - step: load_data
+    df: source_data
+    path: "data/input.csv"
+    format: csv
+    options:
+      header: true
+
+transform:
+  - step: process_data
+    sql: SELECT *, UPPER(column1) as upper_column FROM source_data
+    df: processed_data
+
+load:
+  - step: save_results
+    df: processed_data
+    path: "output/result.parquet"
+    format: parquet
+    mode: overwrite
+```
+
+2. Run the pipeline:
+   ```bash
+   etl my_pipeline.yaml
    ```
 
 ## Configuration Options
@@ -86,12 +115,15 @@ DuckDB) with YAML-based configuration.
 - `df`: Name of the DataFrame to store the extracted data
 - `path`: Path to the input file
 - `format`: Input format (e.g., `csv`, `json`)
+- `cache`: (Optional) Cache the data for better performance (default: false)
 - `options`: Additional options for the data source (e.g., `header: true` for CSV)
 
 ### Transform Configuration
 
 - `step`: Unique identifier for the transformation step
 - `sql`: SQL query to execute
+- `sql_file`: (Optional) Path to a SQL file containing the query template
+- `inputs`: (Optional) Dictionary mapping input DataFrame names to pipeline DataFrame names
 - `df`: (Optional) Name to store the result DataFrame
 
 ### Load Configuration
@@ -105,30 +137,122 @@ DuckDB) with YAML-based configuration.
 
 ## Examples
 
-### Basic ETL with CSV
+### Basic ETL with CSV Data
 
 ```yaml
-pipeline: basic_etl
+pipeline: basic_csv_etl
 engine: duckdb
 
 extract:
-  - step: load_data
-    df: my_data
-    path: "data/input.csv"
+  - step: load_sales_data
+    df: sales_data
+    path: "data/sales.csv"
     format: csv
     options:
       header: true
 
 transform:
-  - step: process_data
-    sql: SELECT *, UPPER(column1) as upper_column FROM my_data
-    df: processed_data
+  - step: clean_sales
+    sql: SELECT SUPPLIER, "ITEM TYPE", sum("WAREHOUSE SALES") AS SALES
+         FROM sales_data
+         GROUP BY SUPPLIER, "ITEM TYPE"
+    df: clean_sales
 
 load:
-  - step: save_results
-    df: processed_data
-    path: "output/result.parquet"
-    format: parquet
+  - step: sales_output
+    df: clean_sales
     mode: overwrite
+    format: parquet
+    path: "output/sales.zstd.parquet"
+    options:
+      compression: zstd
 ```
 
+### ETL with JSON Data and SQL File
+
+```yaml
+pipeline: wine_reviews_etl
+engine: duckdb
+
+extract:
+  - step: load_winemag_data
+    df: winemag_data
+    path: "data/winemag-reviews.json"
+    format: json
+
+transform:
+  - step: most_reviewed
+    sql_file: sql/most_reviewed.sql
+    inputs:
+      winemag_df: winemag_data
+    df: most_reviewed
+
+load:
+  - step: winemag_output
+    df: winemag_data
+    mode: overwrite
+    format: parquet
+    path: "output/winemag.zstd.parquet"
+    options:
+      compression: zstd
+```
+
+## Testing
+
+Run the test suite using pytest:
+
+```bash
+# Run all tests
+pytest
+
+# Run tests with coverage
+pytest --cov=src/pipe_yaml --cov-report=html
+
+# Run specific test file
+pytest tests/test_models.py
+```
+
+## Development
+
+### Development Dependencies
+
+The project uses several development tools that are automatically installed when you run `uv sync --dev`:
+
+- **pytest**: Testing framework
+- **black**: Code formatter
+- **isort**: Import sorter
+- **ruff**: Fast Python linter
+- **mypy**: Static type checker
+
+### Code Quality
+
+Format your code:
+
+```bash
+black src/ tests/
+isort src/ tests/
+```
+
+Lint your code:
+
+```bash
+ruff check src/ tests/
+```
+
+Type check your code:
+
+```bash
+mypy src/
+```
+
+## Project Structure
+
+```
+pipe_yaml/
+├── src/pipe_yaml/        # Source code
+├── tests/               # Test files
+├── pipelines/           # Example pipeline configurations
+├── data/                # Sample data files
+├── sql/                 # SQL files for transformations
+├── output/              # Generated output files
+└── pyproject.toml       # Project configuration
