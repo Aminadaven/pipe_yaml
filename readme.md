@@ -70,7 +70,7 @@ DuckDB) with YAML-based configuration.
 
 2. Run the ETL pipeline:
    ```bash
-   python main.py pipeline/sales_etl.yaml
+   python __main__.py pipeline/sales_etl.yaml
    ```
 
 ## Configuration Options

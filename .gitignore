@@ -1,3 +1,5 @@
 .venv
 .idea
 /output
+/dist
+/pipe_yaml.egg-info

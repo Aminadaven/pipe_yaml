@@ -1,6 +1,6 @@
 import duckdb
 
-from base_etl import *
+from pipe_yaml.base_etl import *
 
 
 class DuckdbETL(BaseETL):
