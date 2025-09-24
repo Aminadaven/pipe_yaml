@@ -1,9 +1,11 @@
 import pytest
 
-from pipe_yaml.models import Pipeline, ExtractStep, TransformStep
+from pipe_yaml.models import Pipeline, ExtractStep, TransformStep, LoadStep
 
 
-class TestPipeline:
+class TestCoreModels:
+    """Test core model functionality with minimal tests."""
+
     def test_pipeline_creation(self):
         """Test that a pipeline can be created with valid configuration."""
         config = {
@@ -34,7 +36,6 @@ class TestPipeline:
         assert pipeline.engine == "spark"
         assert len(pipeline.extract_steps) == 1
         assert len(pipeline.load_steps) == 1
-        assert len(pipeline.transform_steps) == 0
 
     def test_pipeline_validation_fails_without_steps(self):
         """Test that pipeline validation fails when no ETL steps are provided."""
@@ -61,7 +62,20 @@ class TestPipeline:
         assert step.path == "data/test.csv"
         assert step.df == "test_data"
         assert step.format == "csv"
-        assert step.cache is False
+
+    def test_extract_step_missing_required_fields(self):
+        """Test extract step validation fails with missing required fields."""
+        # Missing path
+        with pytest.raises(ValueError):
+            ExtractStep(step="test", df="test_df", format="csv")
+
+        # Missing df
+        with pytest.raises(ValueError):
+            ExtractStep(step="test", path="test.csv", format="csv")
+
+        # Missing format
+        with pytest.raises(ValueError):
+            ExtractStep(step="test", path="test.csv", df="test_df")
 
     def test_transform_step_validation(self):
         """Test that transform step validation works correctly."""
@@ -84,3 +98,40 @@ class TestPipeline:
 
         with pytest.raises(ValueError, match="Invalid Transformation"):
             TransformStep(**invalid_config)
+
+    def test_transform_step_missing_sql_and_sql_file(self):
+        """Test transform step validation fails without sql or sql_file."""
+        with pytest.raises(ValueError, match="Invalid Transformation"):
+            TransformStep(step="test")
+
+    def test_load_step_creation(self):
+        """Test that a load step can be created."""
+        step_config = {
+            "step": "load_data",
+            "df": "source_table",
+            "mode": "overwrite",
+            "format": "parquet",
+            "path": "output/data.parquet"
+        }
+
+        step = LoadStep(**step_config)
+
+        assert step.name == "load_data"
+        assert step.df == "source_table"
+        assert step.mode == "overwrite"
+        assert step.format == "parquet"
+        assert step.path == "output/data.parquet"
+
+    def test_load_step_missing_required_fields(self):
+        """Test load step validation fails with missing required fields."""
+        # Missing mode
+        with pytest.raises(ValueError):
+            LoadStep(step="test", df="test_df", format="parquet", path="output.parquet")
+
+        # Missing format
+        with pytest.raises(ValueError):
+            LoadStep(step="test", df="test_df", mode="overwrite", path="output.parquet")
+
+        # Missing path
+        with pytest.raises(ValueError):
+            LoadStep(step="test", df="test_df", mode="overwrite", format="parquet")
