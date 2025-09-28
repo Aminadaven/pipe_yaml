@@ -21,14 +21,14 @@ class Args:
 def load_pipeline(args):
     with open(args.etl_file, "r") as f:
         config = yaml.safe_load(f)
-    return Pipeline(**config)
+    return Pipeline.model_validate(config)
 
 
 def main():
     args = Args.from_args()
     pipeline = load_pipeline(args)
-    etl_runner = EtlFactory.create_etl(pipeline.engine)
-    etl_runner.run(pipeline)
+    etl_runner = EtlFactory.create_etl(pipeline)
+    etl_runner.run()
 
 
 if __name__ == "__main__":

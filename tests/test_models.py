@@ -61,7 +61,7 @@ class TestPipeline:
         assert step.path == "data/test.csv"
         assert step.df == "test_data"
         assert step.format == "csv"
-        assert step.cache is False
+        assert step.extra.cache is False
 
     def test_transform_step_validation(self):
         """Test that transform step validation works correctly."""

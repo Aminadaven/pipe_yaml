@@ -3,12 +3,18 @@ from typing import Self
 from pydantic import BaseModel, Field, model_validator
 
 
+class SparkExtra(BaseModel):
+    cache: bool = False
+    repartition: int = None
+    partition_by: list[str] = None
+
+
 class ExtractStep(BaseModel):
     name: str = Field(alias="step")
     path: str
     df: str
     format: str
-    cache: bool = False
+    extra: SparkExtra = Field(default_factory=SparkExtra)
     options: dict = Field(default_factory=dict)
 
 
@@ -18,7 +24,7 @@ class TransformStep(BaseModel):
     sql_file: str = None
     inputs: dict = Field(default_factory=dict)
     df: str = None
-    cache: bool = False
+    extra: SparkExtra = Field(default_factory=SparkExtra)
 
     @model_validator(mode='after')
     def validate_transformation(self) -> Self:
@@ -34,11 +40,13 @@ class LoadStep(BaseModel):
     format: str
     path: str
     options: dict = Field(default_factory=dict)
+    extra: SparkExtra = Field(default_factory=SparkExtra)
 
 
 class Pipeline(BaseModel):
     name: str = Field(alias="pipeline", default="Pipeline")
     engine: str = Field(default="spark")
+    dotenv_file: str = None
     extract_steps: list[ExtractStep] = Field(alias="extract", default_factory=list)
     transform_steps: list[TransformStep] = Field(alias="transform", default_factory=list)
     load_steps: list[LoadStep] = Field(alias="load", default_factory=list)

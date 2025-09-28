@@ -4,8 +4,8 @@ from pipe_yaml.base_etl import *
 
 
 class DuckdbETL(BaseETL):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, pipeline: Pipeline):
+        super().__init__(pipeline=pipeline)
 
     def _extract_step(self, step: ExtractStep):
         super()._extract_step(step)

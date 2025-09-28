@@ -1,5 +1,6 @@
 pipeline: wine_reviews_etl
 engine: duckdb
+dotenv_file: simple.env
 extract:
   - step: load_winemag_data
     df: winemag_data
