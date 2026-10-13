@@ -22,7 +22,7 @@ dependencies = [
     "jinja2~=3.1.6",
     "loguru>=0.7.3",
     "pydantic~=2.11.9",
-    "pyspark==3.5.6",
+    "pyspark==3.5.8",
     "python-dotenv~=1.1.1",
     "pyyaml~=6.0.3",
 ]
